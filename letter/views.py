@@ -47,7 +47,7 @@ def write_answer(request):
         user = get_object_or_404(User, email=payload['email'])
 
 
-        answer = Answer.objects.filter(responser=user.pk).first()
+        answer = Answer.objects.filter(Q(responser=user.pk) & Q(content=None)).first()
         answer.content = data['content']
         answer.save()
         return HttpResponse(status=200)
